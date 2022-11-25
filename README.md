@@ -14,7 +14,7 @@ php artisan serve
 ```
 
 #### Languages Use
-laravel 9
-vue3
-vue-router4
+laravel 9,
+vue3,
+vue-router4,
 bootstrap5
