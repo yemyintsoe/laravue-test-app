@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\{TagController};
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function(){
+    return view('welcome');
+});
+
+Route::resource('/api/tags', TagController::class);
+
 Route::get('/{any}', function () {
     return view('welcome');
-    })->where("any",".*");
+})->where("any",".*");
