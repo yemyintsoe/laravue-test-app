@@ -1,22 +1,72 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Home from '../components/Home.vue'
-import About from '../components/About.vue'
-import Contact from '../components/Contact.vue'
-
+const Home = () => import('../components/Home.vue')
+const About = () => import('../components/About.vue')
+const Contact = () => import('../components/Contact.vue')
 // admin 
-import Dashboard from '../admin/Dashboard.vue'
+const Dashboard = () => import('../admin/Dashboard.vue')
+// tag
 const TagIndex = () => import('../admin/tag/Index.vue')
-const TagCreate = () => import('../admin/tag/CreateEdit.vue')
+const TagCreateEdit = () => import('../admin/tag/CreateEdit.vue')
+// category
+const CategoryIndex = () => import('../admin/category/Index.vue')
+const CategoryCreateEdit = () => import('../admin/category/CreateEdit.vue')
 
 const routes = [
-    { path: '/', component: Home },
-    { path: '/about', component: About },
-    { path: '/contact', component: Contact },
-
-    { path: '/admin', component: Dashboard },
-    { path: '/admin/tags', component: TagIndex },
-    { path: '/admin/tags/create', component: TagCreate },
+    { 
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
+    },
+    {
+      path: '/admin',
+      name: 'dashboard',
+      component: Dashboard
+    },
+    // tag
+    {
+      path: '/admin/tags',
+      name: 'tagIndex',
+      component: TagIndex
+    },
+    {
+      path: '/admin/tags/create',
+      name: 'tagCreate',
+      component: TagCreateEdit
+    },
+    {
+      path: '/admin/tags/:id',
+      name: 'tagEdit',
+      component: TagCreateEdit,
+      props: true,
+    },
+    // category
+    {
+      path: '/admin/categories',
+      name: 'categoryIndex',
+      component: CategoryIndex
+    },
+    {
+      path: '/admin/categories/create',
+      name: 'categoryCreate',
+      component: CategoryCreateEdit
+    },
+    {
+      path: '/admin/categories/:id',
+      name: 'categoryEdit',
+      component: CategoryCreateEdit,
+      props: true,
+    },
   ];
 
 const router = createRouter({

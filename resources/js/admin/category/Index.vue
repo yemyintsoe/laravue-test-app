@@ -4,8 +4,8 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <h5 class="card-title">Tags</h5>
-                <router-link to="/admin/tags/create" class="btn btn-danger">
+                <h5 class="card-title">Categories</h5>
+                <router-link :to="{name: 'categoryCreate'}" class="btn btn-danger">
                     Add New
                 </router-link>
             </div>
@@ -16,23 +16,27 @@
                 <tr>
                     <th>No</th>
                     <th>Name</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody v-if="tags.length" class="table-border-bottom-0">
-                <tr v-for="(tag, i) in tags" :key="i">
-                    <td>{{ tag.id }}</td>
-                    <td>{{ tag.name }}</td>
+            <tbody v-if="categories.length" class="table-border-bottom-0">
+                <tr v-for="(category, i) in categories" :key="i">
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <img :src="`/storage/images/${category.image}`" alt="" style="width: 100px; height: 100px; object-fit: cover" >
+                    </td>
                     <td>
                         <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
-                            <router-link :to="{name: 'tagEdit', params: {id: tag.id}}" class="dropdown-item">
+                            <router-link :to="{name: 'categoryEdit', params: {id: category.id}}" class="dropdown-item">
                                 <i class="bx bx-edit-alt me-1"></i> Edit
                             </router-link>
-                            <a class="dropdown-item" href="javascript:void(0);" @click="deleteTag(tag.id)"><i class="bx bx-trash me-1"></i> Delete</a>
+                            <a class="dropdown-item" href="javascript:void(0);" @click="deleteCategory(category.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                         </div>
                         </div>
                     </td>
@@ -53,22 +57,22 @@ import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
     const toast = useToast();
 
-    const tags = ref([])
+    const categories = ref([])
 
     const onMountedThisComponent = onMounted( async () => {
         try {
-            const res = await axios.get('/api/tags');
-            tags.value = res.data.tags
+            const res = await axios.get('/api/categories');
+            categories.value = res.data.categories
         } catch (err) {
             console.error(err);
         }
     })
 
-    async function deleteTag(id) {
+    async function deleteCategory(id) {
         try {
-            await axios.delete(`/api/tags/${id}`);
+            await axios.delete(`/api/categories/${id}`);
             onMountedThisComponent()
-            toast.success('a tag is deleted successfully', {timeout: 2000})
+            toast.success('a category is deleted successfully', {timeout: 2000})
         } catch (err) {
             console.error(err);
         }

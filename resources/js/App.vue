@@ -83,7 +83,13 @@
               <li class="menu-item">
                 <router-link to="/admin/tags" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-file"></i>
-                  <div data-i18n="Documentation">Tag</div>
+                  <div>Tag</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/admin/categories" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-file"></i>
+                  <div>Category</div>
                 </router-link>
               </li>
   
@@ -98,26 +104,6 @@
                   <li class="menu-item">
                     <a href="layouts-without-menu.html" class="menu-link">
                       <div data-i18n="Without menu">Without menu</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                      <div data-i18n="Without navbar">Without navbar</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="layouts-container.html" class="menu-link">
-                      <div data-i18n="Container">Container</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="layouts-fluid.html" class="menu-link">
-                      <div data-i18n="Fluid">Fluid</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="layouts-blank.html" class="menu-link">
-                      <div data-i18n="Blank">Blank</div>
                     </a>
                   </li>
                 </ul>
@@ -137,19 +123,8 @@
                       <div data-i18n="Account">Account</div>
                     </a>
                   </li>
-                  <li class="menu-item">
-                    <a href="pages-account-settings-notifications.html" class="menu-link">
-                      <div data-i18n="Notifications">Notifications</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="pages-account-settings-connections.html" class="menu-link">
-                      <div data-i18n="Connections">Connections</div>
-                    </a>
-                  </li>
                 </ul>
-              </li>
-  
+              </li>  
               <li class="menu-item">
                 <a href="icons-boxicons.html" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-crown"></i>
@@ -278,26 +253,7 @@
               <footer class="content-footer footer bg-footer-theme">
                 <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                   <div class="mb-2 mb-md-0">
-                    © 2022 , made with ❤️ by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
-                  </div>
-                  <div>
-                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-  
-                    <a
-                      href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Documentation</a
-                    >
-  
-                    <a
-                      href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Support</a
-                    >
+                    &copy; 2022 Hornbill Technology. All rights reserved.
                   </div>
                 </div>
               </footer>

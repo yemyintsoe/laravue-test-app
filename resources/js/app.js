@@ -10,12 +10,17 @@ import('../admin-assets/assets/vendor/libs/apex-charts/apex-charts.css')
 import('../admin-assets/assets/vendor/js/helpers.js')
 import('../admin-assets/assets/js/config.js')
 
+// toast
+import  Toast  from 'vue-toastification';
+import "vue-toastification/dist/index.css";
+
 import { createApp } from 'vue';
 import App from './App.vue'
 import router from './router/index'
 
 createApp(App)
 .use(router)
+.use(Toast)
 .mount("#app")
 
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
