@@ -11,7 +11,7 @@
                     <span v-else>Category Creation Form</span>
                 </h5>
                 <div class="text-muted float-end">
-                    <router-link :to="{name: 'categoryIndex'}" class="btn btn-danger"> Back </router-link>
+                    <router-link :to="{name: 'categoryIndex'}" class="btn btn-secondary bg-secondary text-white"> Back </router-link>
                 </div>
             </div>
             <div class="card-body">
@@ -27,9 +27,11 @@
                     <div class="input-group">
                         <input type="file" @change="getFile" class="form-control" id="image" />
                     </div>
-                    <img v-if="props.id" :src="`/storage/images/${imagePreview}`" alt="" style="width: 100px; height: 100px; object-fit: cover;" class="my-2">
+                    <div class="my-2">
+                        <img :src="imagePreview" alt="" style="width: 100px; height: 100px; object-fit: cover;" v-if="isImagePreviewAble" class="border border-2 border-primary rounded">
+                    </div>
                 </div>
-                <button class="btn btn-danger">Submit</button>
+                <button class="btn btn-primary bg-primary text-white">Submit</button>
                 </form>
             </div>
             </div>
@@ -56,12 +58,17 @@
     })
 
     const formSubmitAction = props.id ? updateCategory : addCategory
+    const imagePreview = ref('')
+    const isImagePreviewAble = ref(false)
     const formInputs = reactive({
         name: "",
         image: ""
     });
     const getFile = (e) => {
-        formInputs.image = e.target.files[0]
+        isImagePreviewAble.value = true
+        const file = e.target.files[0];
+        formInputs.image = file
+        imagePreview.value = URL.createObjectURL(file);
     }
 
     // tag create
@@ -88,12 +95,12 @@
     }
 
     // category edit
-    const imagePreview = ref('')
     onMounted( async () => {
         if(props.id) {
             const res = await axios.get(`/api/categories/${parseInt(props.id)}`)
             formInputs.name = res.data.name
-            imagePreview.value = res.data.image
+            isImagePreviewAble.value = true
+            imagePreview.value = `/storage/images/${res.data.image}`
         }
     })
     

@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">Categories</h5>
-                <router-link :to="{name: 'categoryCreate'}" class="btn btn-danger">
+                <router-link :to="{name: 'categoryCreate'}" class="btn btn-primary bg-primary text-white">
                     Add New
                 </router-link>
             </div>
@@ -25,7 +25,7 @@
                     <td>{{ category.id }}</td>
                     <td>{{ category.name }}</td>
                     <td>
-                        <img :src="`/storage/images/${category.image}`" alt="" style="width: 100px; height: 100px; object-fit: cover" >
+                        <img :src="`/storage/images/${category.image}`" alt="" style="width: 100px; height: 100px; object-fit: cover" class="border border-2 border-primary rounded">
                     </td>
                     <td>
                         <div class="dropdown">
@@ -58,8 +58,7 @@ import { useToast } from "vue-toastification";
     const toast = useToast();
 
     const categories = ref([])
-
-    const onMountedThisComponent = onMounted( async () => {
+    const mountedTheComponent = onMounted( async () => {
         try {
             const res = await axios.get('/api/categories');
             categories.value = res.data.categories
@@ -70,9 +69,11 @@ import { useToast } from "vue-toastification";
 
     async function deleteCategory(id) {
         try {
-            await axios.delete(`/api/categories/${id}`);
-            onMountedThisComponent()
-            toast.success('a category is deleted successfully', {timeout: 2000})
+            if(confirm('are you sure to delete?')) {
+                await axios.delete(`/api/categories/${id}`);
+                mountedTheComponent()
+                toast.success('a category is deleted successfully', {timeout: 2000})
+            }
         } catch (err) {
             console.error(err);
         }
