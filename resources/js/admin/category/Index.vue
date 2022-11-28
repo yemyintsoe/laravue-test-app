@@ -1,11 +1,18 @@
 <template>
     <div class="container-xxl flex-grow-1 container-p-y">
+    <!-- loader  -->
+    <div v-if="loading" class="text-center">
+        <div class="spinner-border spinner-border-lg text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <!-- loader end  -->
     <!-- Basic Bootstrap Table -->
-    <div class="card">
+    <div v-else class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">Categories</h5>
-                <router-link :to="{name: 'categoryCreate'}" class="btn btn-primary bg-primary text-white">
+                <router-link :to="{name: 'categoryCreate'}" class="btn btn-primary  bg-primary text-white">
                     Add New
                 </router-link>
             </div>
@@ -57,11 +64,13 @@ import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
     const toast = useToast();
 
+    const loading = ref(true)
     const categories = ref([])
     const mountedTheComponent = onMounted( async () => {
         try {
             const res = await axios.get('/api/categories');
             categories.value = res.data.categories
+            loading.value = false
         } catch (err) {
             console.error(err);
         }
