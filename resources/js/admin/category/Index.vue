@@ -43,7 +43,7 @@
                             <router-link :to="{name: 'categoryEdit', params: {id: category.id}}" class="dropdown-item">
                                 <i class="bx bx-edit-alt me-1"></i> Edit
                             </router-link>
-                            <a class="dropdown-item" href="javascript:void(0);" @click="categoryStore.deleteCategory(category.id)"><i class="bx bx-trash me-1"></i> Delete</a>
+                            <a class="dropdown-item" href="javascript:void(0);" @click="categoryStore.destroyCategory(category.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                         </div>
                         </div>
                     </td>
@@ -60,17 +60,17 @@
 </template>
 
 <script setup>
-import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import { useCategoryStore } from "../../stores/CategoryStore";
+import { storeToRefs } from "pinia";
 
     const toast = useToast()
     const categoryStore = useCategoryStore()
     const { loading, categories } = storeToRefs(categoryStore)
 
-    const mountedTheComponent = onMounted( () => {
-        categoryStore.fetchCategories();
+    onMounted( () => {
+        categoryStore.getCategories();
     })
 </script>
 
