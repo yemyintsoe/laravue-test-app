@@ -10,7 +10,6 @@ pinia.use(({store}) => {
 })
 
 const toast = useToast()
-// const router = useRouter()
 
 export const useCategoryStore = defineStore('categoryStore', () => {
     const loading = ref(true)
@@ -26,7 +25,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         image: ""
     });
     // edit id
-    const categoryEditId = ref(null)
+    const categoryEditId = ref('')
 
     // index
     const getCategories = async () => {
@@ -47,9 +46,11 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     }
     // store
     const storeCategory = async () => {
+        // alert('sadf')
         if(formInputs.name.trim() == '') {
             toast.error("a category name field is required", {timeout: 2000});
-            return;
+            // return;
+            // alert('sadf')
         }
         if(!formInputs.image) {
             toast.error("a category image field is required", {timeout: 2000});
@@ -93,8 +94,6 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         }
     }
 
-    const formSubmitAction = categoryEditId.id ? updateCategory : storeCategory
-
     // destroy
     const destroyCategory = async (id) => {
         try {
@@ -114,6 +113,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         isImagePreviewAble.value = false
         imagePreview.value = ''
     }
+    const formSubmitAction = categoryEditId.id == '' ? storeCategory : updateCategory
 
 
     return {
@@ -124,13 +124,13 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         isImagePreviewAble,
         formInputs,
         // actions
-        formSubmitAction,
         getCategories,
         getImageFile,
         storeCategory,
         editCategory,
         updateCategory,
         destroyCategory,
-        resetForm
+        resetForm,
+        formSubmitAction,
     }
 })

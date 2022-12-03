@@ -15,11 +15,11 @@
                 </div>
             </div>
             <div class="card-body">
-                <form @submit.prevent="formSubmitAction">
+                <form @submit.prevent="tagStore.formSubmitAction">
                 <div class="mb-3">
                     <label class="form-label" for="newName">Name</label>
                     <div class="input-group">
-                    <input type="text" v-model="formData.name" class="form-control" id="newName" />
+                    <input type="text" v-model="formInputs.name" class="form-control" id="newName" />
                     </div>
                 </div>
                 <button class="btn btn-danger">Submit</button>
@@ -33,13 +33,13 @@
 </template>
 
 <script setup>
-    // functions import
-    import { reactive, ref, defineProps, onMounted } from "vue";
-    import { useRouter } from "vue-router";
-    import { useToast } from "vue-toastification";
-    // functions registration
-    const toast = useToast();
-    const router = useRouter()
+// functions import
+import { defineProps, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useTagStore } from "../../stores/TagStore";
+
+    const tagStore = useTagStore()
+    const { tags, formInputs } = storeToRefs(tagStore)
 
     const props = defineProps({
         id: {
@@ -47,47 +47,14 @@
             required: true
         }
     })
-    const formSubmitAction = props.id ? updateTag : addTag
-    const formData = reactive({
-        name: ""
-    });
-
-    // tag create
-    async function addTag() {
-        if(formData.name.trim() == '') {
-            toast.error("a tag name field is required", {timeout: 2000});
-            return;
-        }
-        try {
-            await axios.post('/api/tags', formData )
-            toast.success("a tag is created successfully", {timeout: 2000});
-            router.push('/admin/tags')
-        } catch (error) {
-            if(error.response.status === 422) {
-                toast.error(error.response.data.message, {timeout: 2000});
-            }
-            console.log(error)
-        }
-    }
-
-    // tag edit
-    onMounted( async () => {
+    
+    onMounted( () => {
         if(props.id) {
-            const res = await axios.get(`/api/tags/${parseInt(props.id)}`)
-            formData.name = res.data.name
+            tagStore.getTag(props.id)
+        } else {
+            tagStore.resetForm()
         }
     })
-    
-    // tag update
-    async function updateTag() {
-        try {
-            await axios.put('/api/tags/'+props.id, formData )
-            router.push('/admin/tags')
-            toast.success("a tag is updated successfully", {timeout: 2000});
-        } catch (error) {
-            console.log(error)
-        }
-    }
 </script>
 
 <style>

@@ -32,7 +32,7 @@
                             <router-link :to="{name: 'tagEdit', params: {id: tag.id}}" class="dropdown-item">
                                 <i class="bx bx-edit-alt me-1"></i> Edit
                             </router-link>
-                            <a class="dropdown-item" href="javascript:void(0);" @click="deleteTag(tag.id)"><i class="bx bx-trash me-1"></i> Delete</a>
+                            <a class="dropdown-item" href="javascript:void(0);" @click="tagStore.deleteTag(tag.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                         </div>
                         </div>
                     </td>
@@ -49,30 +49,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useToast } from "vue-toastification";
-    const toast = useToast();
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
+import { useTagStore } from "../../stores/TagStore";
 
-    const tags = ref([])
+    const tagStore = useTagStore()
+    const { tags } = storeToRefs(tagStore)
 
-    const onMountedThisComponent = onMounted( async () => {
-        try {
-            const res = await axios.get('/api/tags');
-            tags.value = res.data.tags
-        } catch (err) {
-            console.error(err);
-        }
+    onMounted( () => {
+        tagStore.getTags()
     })
-
-    async function deleteTag(id) {
-        try {
-            await axios.delete(`/api/tags/${id}`);
-            onMountedThisComponent()
-            toast.success('a tag is deleted successfully', {timeout: 2000})
-        } catch (err) {
-            console.error(err);
-        }
-    }
 </script>
 
 <style>
