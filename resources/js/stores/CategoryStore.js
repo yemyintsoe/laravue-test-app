@@ -53,7 +53,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
             // alert('sadf')
         }
         if(!formInputs.image) {
-            toast.error("a category image field is required", {timeout: 2000});
+            toast.error("a category image field is required yms", {timeout: 2000});
             return;
         }
         try {
@@ -90,7 +90,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
             router.push({name: 'categoryIndex'})
             toast.success("a category is updated successfully", {timeout: 2000});
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 
@@ -113,8 +113,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         isImagePreviewAble.value = false
         imagePreview.value = ''
     }
-    const formSubmitAction = categoryEditId.id == '' ? storeCategory : updateCategory
-
+    const formSubmitAction = categoryEditId.value == '' ? storeCategory : updateCategory
 
     return {
         // states
@@ -123,6 +122,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         imagePreview,
         isImagePreviewAble,
         formInputs,
+        categoryEditId,
         // actions
         getCategories,
         getImageFile,

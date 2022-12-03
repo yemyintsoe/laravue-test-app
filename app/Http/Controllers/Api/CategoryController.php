@@ -22,7 +22,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name',
             'image' => 'required|image|mimes:jpg,png,jpeg',
         ]);
-        $imageName = $request->file('image')->getClientOriginalName();
+        $imageName =  uniqid().'_'.$request->file('image')->getClientOriginalName();
         $request->file('image')->storeAs('public/images', $imageName);
         $category =  Category::create([
             'name' => $request->name,
@@ -44,12 +44,10 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name,'.$id,
             'image' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
-        if($request->image) {
+        if($request->image != null) {
             Storage::delete('public/images/'.$category->image);
-            $imageName = $request->file('image')->getClientOriginalName();
+            $imageName = uniqid().'_'.$request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('public/images', $imageName);
-
-            $data['image'] = $imageName;
         }
         $category->update($data);
         return response()->json(['msg' => 'a category updated successfully']);
