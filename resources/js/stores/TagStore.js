@@ -81,12 +81,15 @@ export const useTagStore = defineStore('tagStore', () => {
     const resetForm = () => {
         formInputs.name = ''
     }
-    const formSubmitAction = editTagId.id == '' ? storeTag : updateTag
+    const formSubmitAction = () => {
+        editTagId.value == '' ? storeTag() : updateTag()
+    }
 
     return {
         // states
         tags,
         formInputs,
+        editTagId,
         // actions
         getTags,
         storeTag,

@@ -1,6 +1,6 @@
 <template>
-  <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-content-navbar">
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -274,15 +274,6 @@
 
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
-  </div>
+    </div>
     <!-- / Layout wrapper -->
 </template>
-<script setup>
-import { defineProps, onMounted, onUnmounted } from "vue";
-
-import { useUserStore } from "./stores/UserStore";
-import { storeToRefs } from "pinia";
-    // functions registration
-    const userStore = useUserStore()
-    const { isLoggedIn } = storeToRefs(userStore)
-</script>

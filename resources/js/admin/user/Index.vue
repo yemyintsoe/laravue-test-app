@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">Categories</h5>
-                <router-link :to="{name: 'categoryCreate'}" class="btn btn-primary bg-primary text-white">
+                <router-link :to="{name: 'userCreate'}" class="btn btn-primary bg-primary text-white">
                     Add New
                 </router-link>
             </div>
@@ -23,27 +23,27 @@
                 <tr>
                     <th>No</th>
                     <th>Name</th>
-                    <th>Image</th>
+                    <th>Email</th>
+                    <th>Role</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody v-if="categories.length" class="table-border-bottom-0">
-                <tr v-for="(category, i) in categories" :key="i">
-                    <td>{{ category.id }}</td>
-                    <td>{{ category.name }}</td>
-                    <td>
-                        <img :src="`/storage/images/${category.image}`" alt="" style="width: 100px; height: 100px; object-fit: cover" class="rounded">
-                    </td>
+            <tbody v-if="users.length" class="table-border-bottom-0">
+                <tr v-for="(user, i) in users" :key="i">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>                    
                     <td>
                         <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
-                            <router-link :to="{name: 'categoryEdit', params: {id: category.id}}" class="dropdown-item">
+                            <router-link to="" class="dropdown-item">
                                 <i class="bx bx-edit-alt me-1"></i> Edit
                             </router-link>
-                            <a class="dropdown-item" href="javascript:void(0);" @click="categoryStore.destroyCategory(category.id)"><i class="bx bx-trash me-1"></i> Delete</a>
+                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                         </div>
                         </div>
                     </td>
@@ -60,18 +60,18 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { useToast } from "vue-toastification";
-import { useCategoryStore } from "../../stores/CategoryStore";
+import { onMounted, onUnmounted } from "vue";
+import { useUserStore } from "../../stores/UserStore";
 import { storeToRefs } from "pinia";
 
-    const toast = useToast()
-    const categoryStore = useCategoryStore()
-    const { loading, categories } = storeToRefs(categoryStore)
+    const userStore = useUserStore()
+    const { loading, users } = storeToRefs(userStore)
 
     onMounted( () => {
-        categoryStore.getCategories()
-        categoryStore.resetForm()
+        userStore.getUsers()
+    })
+    onUnmounted(() => {
+        loading.value = false
     })
 </script>
 

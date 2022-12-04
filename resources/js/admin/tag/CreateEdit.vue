@@ -34,12 +34,12 @@
 
 <script setup>
 // functions import
-import { defineProps, onMounted } from "vue";
+import { defineProps, onMounted, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useTagStore } from "../../stores/TagStore";
 
     const tagStore = useTagStore()
-    const { tags, formInputs } = storeToRefs(tagStore)
+    const { tags, formInputs, editTagId } = storeToRefs(tagStore)
 
     const props = defineProps({
         id: {
@@ -54,6 +54,9 @@ import { useTagStore } from "../../stores/TagStore";
         } else {
             tagStore.resetForm()
         }
+    })
+    onUnmounted(() => {
+        editTagId.value = ''
     })
 </script>
 

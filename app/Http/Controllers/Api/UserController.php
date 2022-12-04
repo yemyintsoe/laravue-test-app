@@ -3,32 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
 
     public function index()
     {
-        $categories = Category::latest()->get();
-        return response()->json(['categories' => $categories]);
+        $users = User::latest()->get();
+        return response()->json(['users' => $users]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|unique:categories,name',
-            'image' => 'required|image|mimes:jpg,png,jpeg',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:6',
+            'role' => 'required',
         ]);
-        $imageName =  uniqid().'_'.$request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('public/images', $imageName);
-        $category =  Category::create([
-            'name' => $request->name,
-            'image' => $imageName
-        ]);
-        return response()->json($category);
+        $data['password'] = Hash::make($request->password);
+        $user = User::create($data);
+        return response()->json($user);
     }
 
     public function show($id)
@@ -62,5 +62,18 @@ class CategoryController extends Controller
         Storage::delete('public/images/'.$category->image);
         $category->delete();
         return response()->json(["msg" => "deleted success"]);
+    }
+
+    public function singIn(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt($credentials)) {
+            // Auth::login($credentials);
+            return response()->json(['status' => 'success', 'user' => Auth::user()]);
+        }
+        return response()->json(['status' => 'fail']);
     }
 }

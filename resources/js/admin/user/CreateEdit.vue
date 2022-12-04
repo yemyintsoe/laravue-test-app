@@ -7,15 +7,15 @@
             <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">
-                    <span v-if="props.id">Category Edit Form</span>
-                    <span v-else>Category Creation Form</span>
+                    <span v-if="props.id">User Edit Form</span>
+                    <span v-else>User Creation Form</span>
                 </h5>
                 <div class="text-muted float-end">
-                    <router-link :to="{name: 'categoryIndex'}" class="btn btn-secondary bg-secondary text-white"> Back </router-link>
+                    <router-link :to="{name: 'userIndex'}" class="btn btn-secondary bg-secondary text-white"> Back </router-link>
                 </div>
             </div>
             <div class="card-body">
-                <form @submit.prevent="categoryStore.formSubmitAction">
+                <form @submit.prevent="userStore.formSubmitAction">
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
                     <div class="input-group">
@@ -23,12 +23,25 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Image</label>
+                    <label class="form-label" for="email">Email</label>
                     <div class="input-group">
-                        <input type="file" @change="categoryStore.getImageFile" class="form-control" id="image" />
+                    <input type="text" v-model="formInputs.email" class="form-control" id="email" />
                     </div>
-                    <div class="my-2">
-                        <img :src="imagePreview" alt="" style="width: 100px; height: 100px; object-fit: cover;" v-if="isImagePreviewAble" class="border border-2 border-primary rounded">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group">
+                    <input type="text" v-model="formInputs.password" class="form-control" id="password" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="role">Role</label>
+                    <div class="input-group">
+                    <select id="role" v-model="formInputs.role" class="form-control">
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
                     </div>
                 </div>
                 <button class="btn btn-primary bg-primary text-white">Submit</button>
@@ -45,7 +58,7 @@
 // functions import
 import { defineProps, onMounted, onUnmounted } from "vue";
 
-import { useCategoryStore } from "../../stores/CategoryStore";
+import { useUserStore } from "../../stores/UserStore";
 import { storeToRefs } from "pinia";
     
     const props = defineProps({
@@ -55,18 +68,18 @@ import { storeToRefs } from "pinia";
         }
     })
     // functions registration
-    const categoryStore = useCategoryStore()
-    const { imagePreview, isImagePreviewAble, formInputs, categoryEditId } = storeToRefs(categoryStore)
+    const userStore = useUserStore()
+    const { formInputs, editUserId } = storeToRefs(userStore)
     
     onMounted( () => {
         if(props.id) {
-            categoryStore.editCategory(props.id)
+            userStore.editUser(props.id)
         } else {
-            categoryStore.resetForm()
+            userStore.resetForm()
         }
     })
     onUnmounted(() => {
-        categoryEditId.value = ''
+        editUserId.value = ''
     })
 </script>
 

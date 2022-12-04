@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const Home = () => import('../components/Home.vue')
-const About = () => import('../components/About.vue')
-const Contact = () => import('../components/Contact.vue')
-// admin 
+// const Index = () => import('../Index.vue')
+const Login = () => import('../admin/auth/Login.vue')
 const Dashboard = () => import('../admin/Dashboard.vue')
 // tag
 const TagIndex = () => import('../admin/tag/Index.vue')
@@ -11,25 +9,23 @@ const TagCreateEdit = () => import('../admin/tag/CreateEdit.vue')
 // category
 const CategoryIndex = () => import('../admin/category/Index.vue')
 const CategoryCreateEdit = () => import('../admin/category/CreateEdit.vue')
+// user
+const UserIndex = () => import('../admin/user/Index.vue')
+const UserCreateEdit = () => import('../admin/user/CreateEdit.vue')
 
 const routes = [
-    { 
-      path: '/',
-      name: 'home',
-      component: Home
+    // {
+    //   path: '/',
+    //   name: 'index',
+    //   component: Index
+    // },
+    {
+      path: '/admin/login',
+      name: 'login',
+      component: Login
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: Contact
-    },
-    {
-      path: '/admin',
+      path: '/admin/dashboard',
       name: 'dashboard',
       component: Dashboard
     },
@@ -67,6 +63,24 @@ const routes = [
       component: CategoryCreateEdit,
       props: true,
     },
+    // user
+    {
+      path: '/admin/users',
+      name: 'userIndex',
+      component: UserIndex
+    },
+    {
+      path: '/admin/users/create',
+      name: 'userCreate',
+      component: UserCreateEdit
+    },
+    {
+      path: '/admin/users/:id',
+      name: 'userEdit',
+      component: UserCreateEdit,
+      props: true,
+    },
+    
   ];
 
 const router = createRouter({
