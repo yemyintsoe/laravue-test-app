@@ -5,7 +5,7 @@
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <router-link to="/admin" class="app-brand-link">
+          <router-link :to="{name: 'dashboard'}" class="app-brand-link">
             <span class="app-brand-logo demo">
               <svg
                 width="25"
@@ -74,7 +74,7 @@
         <ul class="menu-inner py-1">
           <!-- Dashboard -->
           <li class="menu-item active">
-            <router-link to="/admin" href="index.html" class="menu-link">
+            <router-link :to="{name: 'dashboard'}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
               <div data-i18n="Analytics">Dashboard</div>
             </router-link>
@@ -200,7 +200,7 @@
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">John Doe</span>
+                          <span class="fw-semibold d-block">{{props.user}}</span>
                           <small class="text-muted">Admin</small>
                         </div>
                       </div>
@@ -285,4 +285,15 @@ import { storeToRefs } from "pinia";
     // functions registration
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
+
+    const props = defineProps({
+        user: {
+            type: Object,
+            required: true
+        }
+    })
+
+    onMounted(() => {
+      console.log(props.user)
+    })
 </script>

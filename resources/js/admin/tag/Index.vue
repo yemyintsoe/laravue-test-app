@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">Tags</h5>
-                <router-link to="/admin/tags/create" class="btn btn-danger">
+                <router-link to="/admin/tags/create" class="btn btn-primary bg-primary text-white">
                     Add New
                 </router-link>
             </div>

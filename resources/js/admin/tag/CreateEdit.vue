@@ -11,7 +11,7 @@
                     <span v-else>Tag Creation Form</span>
                 </h5>
                 <div class="text-muted float-end">
-                    <router-link to="/admin/tags" class="btn btn-danger"> Back </router-link>
+                    <router-link to="/admin/tags" class="btn btn-secondary bg-secondary text-white"> Back </router-link>
                 </div>
             </div>
             <div class="card-body">
@@ -22,7 +22,7 @@
                     <input type="text" v-model="formInputs.name" class="form-control" id="newName" />
                     </div>
                 </div>
-                <button class="btn btn-danger">Submit</button>
+                <button class="btn btn-primary bg-primary text-white">Submit</button>
                 </form>
             </div>
             </div>

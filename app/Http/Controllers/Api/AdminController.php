@@ -13,6 +13,9 @@ class AdminController extends Controller
         if(!auth()->check() && request()->path() != 'admin/login') {
             return redirect('admin/login');
         }
+        if(auth()->check() && request()->path() == 'admin/login') {
+            return redirect('admin/tags');
+        }
         return view('welcome');
     }
 }
