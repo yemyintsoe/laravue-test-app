@@ -286,12 +286,7 @@ import { storeToRefs } from "pinia";
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
 
-    const props = defineProps({
-        user: {
-            type: Object,
-            required: true
-        }
-    })
+    const props = defineProps(['user'])
 
     onMounted(() => {
       console.log(props.user)

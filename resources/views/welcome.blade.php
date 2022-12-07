@@ -19,11 +19,11 @@
     <body>
         @auth
             <div id="app">
-                <App :user="{{ auth()->user() }}" />
+                <App user="ma mg" />
             </div>
         @else
             <div id="app">
-                <App :user="false" />
+                <App user="false sdadasd" />
             </div>
         @endauth        
         @vite('resources/js/app.js')
@@ -37,6 +37,6 @@
         @vite('resources/admin-assets/assets/js/main.js')
         @vite('resources/admin-assets/assets/js/dashboards-analytics.js')
          <!-- Place this tag in your head or just before your close body tag. -->
-        <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
     </body>
 </html>
