@@ -20,11 +20,17 @@ import { createApp } from 'vue';
 import App from './App.vue'
 import router from './router/index'
 
-createApp(App)
-.use(router)
-.use(createPinia())
-.use(Toast)
-.mount("#app")
+const app = createApp(App)
+app.use(router)
+app.use(createPinia())
+app.use(Toast)
+app.mount("#app")
+
+// createApp(App)
+// .use(router)
+// .use(createPinia())
+// .use(Toast)
+// .mount("#app")
 
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 // admin panel assets 
