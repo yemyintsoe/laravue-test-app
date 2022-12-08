@@ -31,38 +31,38 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function show($id)
-    {
-        $category = Category::findOrFail($id);
-        return response()->json($category);
-    }
+    // public function show($id)
+    // {
+    //     $category = Category::findOrFail($id);
+    //     return response()->json($category);
+    // }
 
-    public function update(Request $request, $id)
-    {
-        $category = Category::findOrFail($id);
-        $data = $request->validate([
-            'name' => 'required|unique:categories,name,'.$id
-        ]);
-        if($request->image) {
-            $request->validate([
-                'image' => 'image|mimes:jpg,png,jpeg'
-            ]);
-            Storage::delete('public/images/'.$category->image);
-            $imageName = uniqid().'_'.$request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('public/images', $imageName);
-            $data['image'] = $imageName;
-        }
-        $category->update($data);
-        return response()->json(['msg' => 'a category updated successfully']);
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     $category = Category::findOrFail($id);
+    //     $data = $request->validate([
+    //         'name' => 'required|unique:categories,name,'.$id
+    //     ]);
+    //     if($request->image) {
+    //         $request->validate([
+    //             'image' => 'image|mimes:jpg,png,jpeg'
+    //         ]);
+    //         Storage::delete('public/images/'.$category->image);
+    //         $imageName = uniqid().'_'.$request->file('image')->getClientOriginalName();
+    //         $request->file('image')->storeAs('public/images', $imageName);
+    //         $data['image'] = $imageName;
+    //     }
+    //     $category->update($data);
+    //     return response()->json(['msg' => 'a category updated successfully']);
+    // }
 
-    public function destroy($id)
-    {
-        $category = Category::findOrFail($id);
-        Storage::delete('public/images/'.$category->image);
-        $category->delete();
-        return response()->json(["msg" => "deleted success"]);
-    }
+    // public function destroy($id)
+    // {
+    //     $category = Category::findOrFail($id);
+    //     Storage::delete('public/images/'.$category->image);
+    //     $category->delete();
+    //     return response()->json(["msg" => "deleted success"]);
+    // }
 
     public function singIn(Request $request)
     {
@@ -71,9 +71,14 @@ class UserController extends Controller
             'password' => 'required',
         ]);
         if (Auth::attempt($credentials)) {
-            // Auth::login($credentials);
             return response()->json(['status' => 'success', 'user' => Auth::user()]);
         }
         return response()->json(['status' => 'fail']);
+    }
+
+    public function singOut()
+    {
+        auth()->logout();
+        return redirect('/admin/login');
     }
 }

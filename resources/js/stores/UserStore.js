@@ -12,6 +12,7 @@ const toast = useToast();
 
 export const useUserStore = defineStore('userStore', () => {
     const isLoggedIn = ref(true)
+    const authUser = ref(null)
     const loading = ref(true)
     const users = ref([])
 
@@ -104,18 +105,17 @@ export const useUserStore = defineStore('userStore', () => {
     const singIn = async () => {
         if(formInputs.email.trim() == '') toast.error("the email field is required", {timeout: 2000});
         if(formInputs.password.trim() == '') return toast.error("the password field is required", {timeout: 2000});
-        // /api/users/sign-in
         try {
             const formData = new FormData();
             formData.append('email', formInputs.email)
             formData.append('password', formInputs.password)
             const res = await axios.post('/api/users/sign-in', formData )
-            console.log(res.data.status)
             if(res.data.status === 'fail') {
                 toast.error("signed in fail", {timeout: 2000})
                 return
             }
             toast.success("signed in successfully", {timeout: 2000})
+            authUser.value = res.data.user
             isLoggedIn.value = true
             router.push({ name: 'dashboard' })
         } catch (error) {
@@ -129,6 +129,7 @@ export const useUserStore = defineStore('userStore', () => {
     return {
         // states
         isLoggedIn,
+        authUser,
         loading,
         users,
         formInputs,

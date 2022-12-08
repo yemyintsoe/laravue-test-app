@@ -200,7 +200,7 @@
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">{{props.user}}</span>
+                          <span class="fw-semibold d-block">yms test</span>
                           <small class="text-muted">Admin</small>
                         </div>
                       </div>
@@ -234,7 +234,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="auth-login-basic.html">
+                    <a class="dropdown-item" href="/api/sign-out">
                       <i class="bx bx-power-off me-2"></i>
                       <span class="align-middle">Log Out</span>
                     </a>
@@ -278,17 +278,11 @@
     <!-- / Layout wrapper -->
 </template>
 <script setup>
-import { defineProps, onMounted, onUnmounted } from "vue";
+import { onMounted } from "vue";
 
 import { useUserStore } from "./stores/UserStore";
 import { storeToRefs } from "pinia";
     // functions registration
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
-
-    const props = defineProps(['user'])
-
-    onMounted(() => {
-      console.log(props.user)
-    })
 </script>

@@ -17,15 +17,8 @@
         @vite('resources/admin-assets/assets/js/config.js')
     </head>
     <body>
-        @auth
-            <div id="app">
-                <App user="ma mg" />
-            </div>
-        @else
-            <div id="app">
-                <App user="false sdadasd" />
-            </div>
-        @endauth        
+            <div id="app"></div>
+            
         @vite('resources/js/app.js')
          <!-- admin assets  -->
         @vite('resources/admin-assets/assets/vendor/libs/jquery/jquery.js')
