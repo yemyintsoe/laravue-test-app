@@ -70,7 +70,7 @@ import { storeToRefs } from "pinia";
     const { loading, categories } = storeToRefs(categoryStore)
 
     onMounted( () => {
-        categoryStore.getCategories()
+        categoryStore.fetchCategories()
         categoryStore.resetForm()
     })
 </script>

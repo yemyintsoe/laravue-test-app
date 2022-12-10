@@ -17,9 +17,9 @@ export const useTagStore = defineStore('tagStore', () => {
         name: ""
     });
 
-    const editTagId = ref('')
+    const tagEditId = ref('')
     
-    const getTags = async () => {
+    const fetchTags = async () => {
         try {
             const res = await axios.get('/api/tags');
             tags.value = res.data.tags
@@ -47,11 +47,11 @@ export const useTagStore = defineStore('tagStore', () => {
         }
     }
 
-    const getTag = async (id) => {
+    const fetchTag = async (id) => {
         if(id) {
             const res = await axios.get(`/api/tags/${parseInt(id)}`)
             formInputs.name = res.data.name
-            editTagId.value = res.data.id
+            tagEditId.value = res.data.id
         }
     }
 
@@ -60,7 +60,7 @@ export const useTagStore = defineStore('tagStore', () => {
             const formData = new FormData();
             formData.append('name', formInputs.name)
             formData.append('_method', 'patch')
-            await axios.post('/api/tags/'+ editTagId.value, formData )
+            await axios.post('/api/tags/'+ tagEditId.value, formData )
             router.push({name: 'tagIndex'})
             toast.success("a tag is updated successfully", {timeout: 2000});
         } catch (error) {
@@ -71,7 +71,7 @@ export const useTagStore = defineStore('tagStore', () => {
     const deleteTag = async (id) => {
         try {
             await axios.delete(`/api/tags/${id}`);
-            getTags()
+            fetchTags()
             toast.success('a tag is deleted successfully', {timeout: 2000})
         } catch (err) {
             console.error(err);
@@ -82,18 +82,18 @@ export const useTagStore = defineStore('tagStore', () => {
         formInputs.name = ''
     }
     const formSubmitAction = () => {
-        editTagId.value == '' ? storeTag() : updateTag()
+        tagEditId.value == '' ? storeTag() : updateTag()
     }
 
     return {
         // states
         tags,
         formInputs,
-        editTagId,
+        tagEditId,
         // actions
-        getTags,
+        fetchTags,
         storeTag,
-        getTag,
+        fetchTag,
         updateTag,
         deleteTag,
         resetForm,

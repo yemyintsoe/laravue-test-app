@@ -68,7 +68,7 @@ import { storeToRefs } from "pinia";
     const { loading, users } = storeToRefs(userStore)
 
     onMounted( () => {
-        userStore.getUsers()
+        userStore.fetchUsers()
     })
     onUnmounted(() => {
         loading.value = false

@@ -200,7 +200,7 @@
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <!-- <span class="fw-semibold d-block">{{ authUser.name }}</span> -->
+                          <span class="fw-semibold d-block">{{ authUser.name }}</span>
                           <small class="text-muted">Admin</small>
                         </div>
                       </div>
@@ -286,9 +286,8 @@ import { storeToRefs } from "pinia";
     const userStore = useUserStore()
     const { isLoggedIn, authUser } = storeToRefs(userStore)
 
-    
     onMounted(() => {
-      userStore.getAuthUser()
-      console.log('auth user = ' + authUser.value.created_at)
+      userStore.fetchAuthUser()
+      console.log(authUser.value.name)
     })
 </script>

@@ -28,7 +28,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     const categoryEditId = ref('')
 
     // index
-    const getCategories = async () => {
+    const fetchCategories = async () => {
         try {
             const res = await axios.get('/api/categories');
             categories.value = res.data.categories
@@ -63,7 +63,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         }
     }
     // show
-    const editCategory = async (id) => {
+    const fetchCategory = async (id) => {
        if(id) {
             const res = await axios.get(`/api/categories/${parseInt(id)}`)
             formInputs.name = res.data.name
@@ -89,11 +89,11 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     }
 
     // destroy
-    const destroyCategory = async (id) => {
+    const deleteCategory = async (id) => {
         try {
             if(confirm('are you sure to delete?')) {
                 await axios.delete(`/api/categories/${id}`);
-                getCategories()
+                fetchCategories()
                 toast.success('a category is deleted successfully', {timeout: 2000})
             }
         } catch (err) {
@@ -120,12 +120,12 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         formInputs,
         categoryEditId,
         // actions
-        getCategories,
+        fetchCategories,
         getImageFile,
         storeCategory,
-        editCategory,
+        fetchCategory,
         updateCategory,
-        destroyCategory,
+        deleteCategory,
         resetForm,
         formSubmitAction,
     }

@@ -39,7 +39,7 @@ import { storeToRefs } from "pinia";
 import { useTagStore } from "../../stores/TagStore";
 
     const tagStore = useTagStore()
-    const { tags, formInputs, editTagId } = storeToRefs(tagStore)
+    const { tags, formInputs, tagEditId } = storeToRefs(tagStore)
 
     const props = defineProps({
         id: {
@@ -50,13 +50,13 @@ import { useTagStore } from "../../stores/TagStore";
     
     onMounted( () => {
         if(props.id) {
-            tagStore.getTag(props.id)
+            tagStore.fetchTag(props.id)
         } else {
             tagStore.resetForm()
         }
     })
     onUnmounted(() => {
-        editTagId.value = ''
+        tagEditId.value = ''
     })
 </script>
 

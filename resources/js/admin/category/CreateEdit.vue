@@ -60,7 +60,7 @@ import { storeToRefs } from "pinia";
     
     onMounted( () => {
         if(props.id) {
-            categoryStore.editCategory(props.id)
+            categoryStore.fetchCategory(props.id)
         } else {
             categoryStore.resetForm()
         }

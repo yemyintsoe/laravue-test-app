@@ -23,9 +23,9 @@ export const useUserStore = defineStore('userStore', () => {
         role: "",
     });
 
-    const editUserId = ref('')
+    const userEditId = ref('')
     
-    const getUsers = async () => {
+    const fetchUsers = async () => {
         try {
             const res = await axios.get('/api/users');
             users.value = res.data.users
@@ -57,13 +57,13 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
-    const getUser = async (id) => {
+    const fetchUser = async (id) => {
         if(id) {
             const res = await axios.get(`/api/users/${parseInt(id)}`)
             formInputs.name = res.data.name
             formInputs.emial = res.data.emial
             formInputs.role = res.data.role
-            editUserId.value = res.data.id
+            userEditId.value = res.data.id
         }
     }
 
@@ -74,7 +74,7 @@ export const useUserStore = defineStore('userStore', () => {
             formData.append('email', formInputs.email)
             formData.append('role', formInputs.role)
             formData.append('_method', 'patch')
-            await axios.post('/api/users/'+ editUserId.value, formData )
+            await axios.post('/api/users/'+ userEditId.value, formData )
             router.push({name: 'userIndex'})
             toast.success("a user is updated successfully", {timeout: 2000});
         } catch (error) {
@@ -99,7 +99,7 @@ export const useUserStore = defineStore('userStore', () => {
         formInputs.role = ''
     }
     const formSubmitAction = () => {
-        editUserId.value == '' ? storeUser() : updateUser()
+        userEditId.value == '' ? storeUser() : updateUser()
     }
 
     const singIn = async () => {
@@ -126,7 +126,7 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
-    const getAuthUser = async () => {
+    const fetchAuthUser = async () => {
         const res = await axios.get("/api/users/auth/user")
         authUser.value = res.data.authUser
     }
@@ -138,16 +138,16 @@ export const useUserStore = defineStore('userStore', () => {
         loading,
         users,
         formInputs,
-        editUserId,
+        userEditId,
         // actions
         storeUser,
-        getUsers,
-        getUser,
+        fetchUsers,
+        fetchUser,
         updateUser,
         deleteUser,
         resetForm,
         formSubmitAction,
         singIn,
-        getAuthUser
+        fetchAuthUser
     }
 })

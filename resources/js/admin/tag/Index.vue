@@ -57,7 +57,7 @@ import { useTagStore } from "../../stores/TagStore";
     const { tags } = storeToRefs(tagStore)
 
     onMounted( () => {
-        tagStore.getTags()
+        tagStore.fetchTags()
     })
 </script>
 
