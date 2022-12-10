@@ -11,6 +11,7 @@ Route::apiResource('/api/categories', CategoryController::class);
 Route::apiResource('/api/users', UserController::class);
 Route::post('/api/users/sign-in', [UserController::class, 'singIn']);
 Route::get('/api/sign-out', [UserController::class, 'singOut']);
+Route::get('/api/users/auth/user', [UserController::class, 'getAuthUser']);
 
 Route::get('/', [AdminController::class, 'index']);
 Route::get('/{any}', [AdminController::class, 'index'])->where("any",".*");

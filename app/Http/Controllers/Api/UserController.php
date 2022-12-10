@@ -81,4 +81,12 @@ class UserController extends Controller
         auth()->logout();
         return redirect('/admin/login');
     }
+
+    public function getAuthUser()
+    {
+        if(!auth()->check()) {
+            return response()->json(['authUser' => null]); 
+        }
+        return response()->json(['authUser' => auth()->user()]);
+    }
 }

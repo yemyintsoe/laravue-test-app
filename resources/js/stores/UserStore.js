@@ -12,7 +12,7 @@ const toast = useToast();
 
 export const useUserStore = defineStore('userStore', () => {
     const isLoggedIn = ref(true)
-    const authUser = ref(null)
+    const authUser = ref('')
     const loading = ref(true)
     const users = ref([])
 
@@ -126,6 +126,11 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
+    const getAuthUser = async () => {
+        const res = await axios.get("/api/users/auth/user")
+        authUser.value = res.data.authUser
+    }
+
     return {
         // states
         isLoggedIn,
@@ -142,6 +147,7 @@ export const useUserStore = defineStore('userStore', () => {
         deleteUser,
         resetForm,
         formSubmitAction,
-        singIn
+        singIn,
+        getAuthUser
     }
 })

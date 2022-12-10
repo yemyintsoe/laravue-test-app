@@ -200,7 +200,7 @@
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">yms test</span>
+                          <!-- <span class="fw-semibold d-block">{{ authUser.name }}</span> -->
                           <small class="text-muted">Admin</small>
                         </div>
                       </div>
@@ -284,5 +284,11 @@ import { useUserStore } from "./stores/UserStore";
 import { storeToRefs } from "pinia";
     // functions registration
     const userStore = useUserStore()
-    const { isLoggedIn } = storeToRefs(userStore)
+    const { isLoggedIn, authUser } = storeToRefs(userStore)
+
+    
+    onMounted(() => {
+      userStore.getAuthUser()
+      console.log('auth user = ' + authUser.value.created_at)
+    })
 </script>
