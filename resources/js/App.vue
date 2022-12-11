@@ -81,21 +81,15 @@
           </li>
 
           <li class="menu-item">
-            <router-link to="/admin/tags" class="menu-link">
+            <router-link :to="{name: 'tagIndex'}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-file"></i>
               <div>Tag</div>
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/admin/categories" class="menu-link">
+            <router-link :to="{name: 'categoryIndex'}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-file"></i>
               <div>Category</div>
-            </router-link>
-          </li>
-          <li class="menu-item">
-            <router-link to="/admin/users" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-file"></i>
-              <div>User</div>
             </router-link>
           </li>
 
@@ -103,14 +97,20 @@
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Layouts">Layouts</div>
+              <div data-i18n="Layouts">User Management</div>
             </a>
-
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="layouts-without-menu.html" class="menu-link">
-                  <div data-i18n="Without menu">Without menu</div>
-                </a>
+                <router-link :to="{name: 'userIndex'}" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-file"></i>
+                  <div>User</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link :to="{name: 'roleIndex'}" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-file"></i>
+                  <div>Role</div>
+                </router-link>
               </li>
             </ul>
           </li>
@@ -288,6 +288,5 @@ import { storeToRefs } from "pinia";
 
     onMounted(() => {
       userStore.fetchAuthUser()
-      console.log(authUser.value.name)
     })
 </script>

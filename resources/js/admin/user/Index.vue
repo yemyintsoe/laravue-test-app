@@ -11,7 +11,7 @@
     <div v-else class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <h5 class="card-title">Categories</h5>
+                <h5 class="card-title">Users</h5>
                 <router-link :to="{name: 'userCreate'}" class="btn btn-primary bg-primary text-white">
                     Add New
                 </router-link>
@@ -33,7 +33,7 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>                    
+                    <td>{{ user.role.role }}</td>                    
                     <td>
                         <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -43,7 +43,8 @@
                             <router-link to="" class="dropdown-item">
                                 <i class="bx bx-edit-alt me-1"></i> Edit
                             </router-link>
-                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                            <!-- <button @click="userStore.deleteUser(user.id)" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button> -->
+                            <a class="dropdown-item" href="javascript:void(0);" @click="userStore.deleteUser(user.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                         </div>
                         </div>
                     </td>
@@ -70,9 +71,9 @@ import { storeToRefs } from "pinia";
     onMounted( () => {
         userStore.fetchUsers()
     })
-    onUnmounted(() => {
-        loading.value = false
-    })
+    // onUnmounted(() => {
+    //     loading.value = false
+    // })
 </script>
 
 <style>

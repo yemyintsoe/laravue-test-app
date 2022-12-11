@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::with('role')->latest()->get();
         return response()->json(['users' => $users]);
     }
 
@@ -24,7 +24,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required',
+            'role_id' => 'required',
         ]);
         $data['password'] = Hash::make($request->password);
         $user = User::create($data);
@@ -56,13 +56,12 @@ class UserController extends Controller
     //     return response()->json(['msg' => 'a category updated successfully']);
     // }
 
-    // public function destroy($id)
-    // {
-    //     $category = Category::findOrFail($id);
-    //     Storage::delete('public/images/'.$category->image);
-    //     $category->delete();
-    //     return response()->json(["msg" => "deleted success"]);
-    // }
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(["msg" => "deleted success"]);
+    }
 
     public function singIn(Request $request)
     {

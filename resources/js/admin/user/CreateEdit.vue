@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form @submit.prevent="userStore.formSubmitAction">
+                <form @submit.prevent="userStore.storeUser">
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
                     <div class="input-group">
@@ -37,10 +37,11 @@
                 <div class="mb-3">
                     <label class="form-label" for="role">Role</label>
                     <div class="input-group">
-                    <select id="role" v-model="formInputs.role" class="form-control">
+                    <select id="role" v-model="formInputs.role_id" class="form-control">
                         <option value="">Select Role</option>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
+                        <option :value="role.id" v-for="(role, i) in roles" :key="i">
+                        {{ role.role }}
+                        </option>
                     </select>
                     </div>
                 </div>
@@ -56,7 +57,7 @@
 
 <script setup>
 // functions import
-import { defineProps, onMounted, onUnmounted } from "vue";
+import { onMounted } from "vue";
 
 import { useUserStore } from "../../stores/UserStore";
 import { storeToRefs } from "pinia";
@@ -69,17 +70,16 @@ import { storeToRefs } from "pinia";
     })
     // functions registration
     const userStore = useUserStore()
-    const { formInputs, editUserId } = storeToRefs(userStore)
+    const { roles, formInputs } = storeToRefs(userStore)
     
     onMounted( () => {
-        if(props.id) {
-            userStore.editUser(props.id)
-        } else {
-            userStore.resetForm()
-        }
-    })
-    onUnmounted(() => {
-        editUserId.value = ''
+        userStore.fetchRoles()
+        // if(props.id) {
+        //     userStore.editUser(props.id)
+        // } else {
+        //     userStore.resetForm()
+        // }
+        userStore.resetForm()
     })
 </script>
 

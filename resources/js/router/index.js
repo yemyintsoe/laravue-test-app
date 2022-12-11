@@ -12,6 +12,9 @@ const CategoryCreateEdit = () => import('../admin/category/CreateEdit.vue')
 // user
 const UserIndex = () => import('../admin/user/Index.vue')
 const UserCreateEdit = () => import('../admin/user/CreateEdit.vue')
+// role
+const RoleIndex = () => import('../admin/role/Index.vue')
+const PermissionAssign = () => import('../admin/role/PermissionAssign.vue')
 
 const routes = [
     // {
@@ -79,6 +82,18 @@ const routes = [
       name: 'userEdit',
       component: UserCreateEdit,
       props: true,
+    },
+    // role
+    {
+      path: '/admin/roles',
+      name: 'roleIndex',
+      component: RoleIndex
+    },
+    {
+      path: '/admin/roles/:roleId/assign-permissions',
+      name: 'permissionAssign',
+      component: PermissionAssign,
+      props: true
     },
     
   ];

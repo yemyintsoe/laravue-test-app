@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AdminController, CategoryController, TagController, UserController};
+use App\Http\Controllers\Api\{AdminController, CategoryController, RoleController, TagController, UserController};
 
 Route::prefix('api')->middleware('isAdmin')->group(function() {
     # tag
     Route::apiResource('/tags', TagController::class);
     # category
     Route::apiResource('/categories', CategoryController::class);
+    # role
+    Route::apiResource('/roles', RoleController::class);
     # user
     Route::apiResource('/users', UserController::class);
     Route::post('/users/sign-in', [UserController::class, 'singIn']);

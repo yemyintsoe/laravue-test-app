@@ -3,6 +3,7 @@ import { reactive, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { markRaw } from "vue";
 import router from "../router";
+import axios from "axios";
 
 const pinia = createPinia()
 pinia.use(({store}) => {
@@ -15,15 +16,16 @@ export const useUserStore = defineStore('userStore', () => {
     const authUser = ref('')
     const loading = ref(true)
     const users = ref([])
+    const roles = ref([])
 
     const formInputs = reactive({
         name: "",
         email: "",
         password: "",
-        role: "",
+        role_id: "",
     });
 
-    const userEditId = ref('')
+    // const userEditId = ref('')
     
     const fetchUsers = async () => {
         try {
@@ -35,17 +37,26 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
+    const fetchRoles = async () => {
+        try {
+            const res = await axios.get('/api/roles');
+            roles.value = res.data.roles
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     const storeUser = async () => {
         if(formInputs.name.trim() == '') toast.error("the name field is required", {timeout: 2000});
         if(formInputs.email.trim() == '') toast.error("the email field is required", {timeout: 2000});
         if(formInputs.password.trim() == '') toast.error("the password field is required", {timeout: 2000});
-        if(formInputs.role.trim() == '') return toast.error("the role field is required", {timeout: 2000});
+        if(formInputs.role_id == '') return toast.error("the role field is required", {timeout: 2000});
         try {
             const formData = new FormData();
             formData.append('name', formInputs.name)
             formData.append('email', formInputs.email)
             formData.append('password', formInputs.password)
-            formData.append('role', formInputs.role)
+            formData.append('role_id', formInputs.role_id)
             await axios.post('/api/users', formData )
             toast.success("a user is created successfully", {timeout: 2000});
             router.push({ name: 'userIndex' })
@@ -57,38 +68,48 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
-    const fetchUser = async (id) => {
-        if(id) {
-            const res = await axios.get(`/api/users/${parseInt(id)}`)
-            formInputs.name = res.data.name
-            formInputs.emial = res.data.emial
-            formInputs.role = res.data.role
-            userEditId.value = res.data.id
-        }
-    }
+    // const fetchUser = async (id) => {
+    //     if(id) {
+    //         const res = await axios.get(`/api/users/${parseInt(id)}`)
+    //         formInputs.name = res.data.name
+    //         formInputs.email = res.data.email
+    //         formInputs.role_id = res.data.role_id
+    //         userEditId.value = res.data.id
+    //     }
+    // }
 
-    const updateUser = async () => {
-        try {
-            const formData = new FormData();
-            formData.append('name', formInputs.name)
-            formData.append('email', formInputs.email)
-            formData.append('role', formInputs.role)
-            formData.append('_method', 'patch')
-            await axios.post('/api/users/'+ userEditId.value, formData )
-            router.push({name: 'userIndex'})
-            toast.success("a user is updated successfully", {timeout: 2000});
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const updateUser = async () => {
+    //     try {
+    //         const formData = new FormData();
+    //         formData.append('name', formInputs.name)
+    //         formData.append('email', formInputs.email)
+    //         formData.append('role_id', formInputs.role_id)
+    //         formData.append('_method', 'patch')
+    //         await axios.post('/api/users/'+ userEditId.value, formData )
+    //         router.push({name: 'userIndex'})
+    //         toast.success("a user is updated successfully", {timeout: 2000});
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+    // const deleteUser = async (id) => {
+    //     try {
+    //         await axios.delete(`/api/users/${id}`);
+    //         getTags()
+    //         toast.success('a user is deleted successfully', {timeout: 2000})
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
 
     const deleteUser = async (id) => {
         try {
-            await axios.delete(`/api/users/${id}`);
-            getTags()
+            await axios.delete(`/api/users/${id}`)
+            fetchUsers()
             toast.success('a user is deleted successfully', {timeout: 2000})
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -96,11 +117,11 @@ export const useUserStore = defineStore('userStore', () => {
         formInputs.name = ''
         formInputs.email = ''
         formInputs.password = ''
-        formInputs.role = ''
+        formInputs.role_id = ''
     }
-    const formSubmitAction = () => {
-        userEditId.value == '' ? storeUser() : updateUser()
-    }
+    // const formSubmitAction = () => {
+    //     userEditId.value == '' ? storeUser() : updateUser()
+    // }
 
     const singIn = async () => {
         if(formInputs.email.trim() == '') toast.error("the email field is required", {timeout: 2000});
@@ -137,16 +158,18 @@ export const useUserStore = defineStore('userStore', () => {
         authUser,
         loading,
         users,
+        roles,
         formInputs,
-        userEditId,
+        // userEditId,
         // actions
-        storeUser,
         fetchUsers,
-        fetchUser,
-        updateUser,
+        fetchRoles,
+        storeUser,
+        // fetchUser,
+        // updateUser,
         deleteUser,
         resetForm,
-        formSubmitAction,
+        // formSubmitAction,
         singIn,
         fetchAuthUser
     }
