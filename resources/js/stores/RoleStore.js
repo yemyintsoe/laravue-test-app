@@ -1,3 +1,4 @@
+import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -38,11 +39,21 @@ export const useRoleStore = defineStore('roleStore', () => {
     }
     const fetchRole = async (roleId) => {
      try {
-        const res = await axios.get(`/api/roles/${roleId}`)
+        const res = await axios.get(`/api/roles/${parseInt(roleId)}`)
         role.value = res.data.role
      } catch (error) {
         console.log(error)
      }
+    }
+
+    const assignPermissions = async (roleId) => {
+        try {
+            const res = await axios.put(`/api/roles/${roleId}`, {
+                permissions: JSON.stringify(permissions.value)
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return {
@@ -52,6 +63,7 @@ export const useRoleStore = defineStore('roleStore', () => {
         permissions,
         // actions
         fetchRoles,
-        fetchRole
+        fetchRole,
+        assignPermissions
     }
 })

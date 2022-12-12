@@ -9,7 +9,9 @@
             </div>
         </div>
         <div class="card-body">
-            <h5>Role : {{ role.role }}</h5>
+            <h5>
+                Role : <span v-if="role">{{ role.role }} </span>
+            </h5>
             <div class="table-responsive text-nowrap">
             <table class="table">
             <thead>
@@ -42,7 +44,7 @@
             <tr><div class="p-3">No data found</div></tr>
            </tbody>
             </table>
-            <button class="btn btn-primary bg-primary text-white mt-3">Save Changes</button>
+            <button @click="roleStore.assignPermissions(role.id)" class="btn btn-primary bg-primary text-white mt-3">Save Changes</button>
         </div>
         </div>
     </div>
@@ -55,12 +57,7 @@ import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useRoleStore } from "../../stores/RoleStore";
 
-const props = defineProps({
-    roleId: {
-        type: Number,
-        required: true
-    }
-})
+const props = defineProps(['roleId'])
 
     const roleStore = useRoleStore()
     const { roles, role, permissions } = storeToRefs(roleStore)

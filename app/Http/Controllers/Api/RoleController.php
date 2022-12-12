@@ -26,7 +26,11 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->update([
+            'permissions' => $request->permissions
+        ]);
+        return response()->json(['msg' => 'assign permissions successfully']);
     }
 
     public function destroy($id)
