@@ -54,7 +54,7 @@
 
 <script setup>
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useRoleStore } from "../../stores/RoleStore";
 
 const props = defineProps(['roleId'])
@@ -65,6 +65,8 @@ const props = defineProps(['roleId'])
     onMounted( () => {
         roleStore.fetchRoles()
         roleStore.fetchRole(props.roleId)
+    })
+    onUnmounted(() => {
     })
 </script>
 

@@ -13,7 +13,6 @@
                 <tr>
                     <th>No</th>
                     <th>Role</th>
-                    <th>Permissons</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -21,7 +20,6 @@
                 <tr v-for="(role, i) in roles" :key="i">
                     <td>{{ role.id }}</td>
                     <td>{{ role.role }}</td>
-                    <td>test Permissons</td>
                     <td>
                         <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

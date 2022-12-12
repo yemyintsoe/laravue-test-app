@@ -30,7 +30,7 @@ class RoleController extends Controller
         $role->update([
             'permissions' => $request->permissions
         ]);
-        return response()->json(['msg' => 'assign permissions successfully']);
+        return response()->json(['msg' => 'permissions have been assigned successfully']);
     }
 
     public function destroy($id)

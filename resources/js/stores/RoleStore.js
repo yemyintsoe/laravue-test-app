@@ -1,34 +1,53 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 export const useRoleStore = defineStore('roleStore', () => {
+    // states 
     const roles = ref([])
     const role = ref(null)
-    const permissions = ref([
-        {
-            menu: 'Tag',
-            read: true,
-            write: false,
-            update: false,
-            delete: false
-        },
-        {
-            menu: 'Category',
-            read: false,
-            write: false,
-            update: false,
-            delete: false
-        },
-        {
-            menu: 'User Management',
-            read: false,
-            write: false,
-            update: false,
-            delete: false
-        },
-    ])
-
+    const permissions = ref([])
+    
+    // actions 
+    const defaultPermissions = () => {
+        return [
+            {
+                menu: 'Tag',
+                read: false,
+                write: false,
+                update: false,
+                delete: false,
+                name: 'tags'
+            },
+            {
+                menu: 'Category',
+                read: false,
+                write: false,
+                update: false,
+                delete: false,
+                name: 'categories'
+            },
+            {
+                menu: 'User',
+                read: false,
+                write: false,
+                update: false,
+                delete: false,
+                name: 'users'
+            },
+            {
+                menu: 'Role',
+                read: false,
+                write: false,
+                update: false,
+                delete: false,
+                name: 'roles'
+            },
+        ]
+    }
     const fetchRoles = async () => {
      try {
         const res = await axios.get('/api/roles')
@@ -41,6 +60,11 @@ export const useRoleStore = defineStore('roleStore', () => {
      try {
         const res = await axios.get(`/api/roles/${parseInt(roleId)}`)
         role.value = res.data.role
+        if(role.value.permissions == null) {
+            permissions.value = defaultPermissions()
+        }else{
+            permissions.value = JSON.parse(role.value.permissions)
+        }
      } catch (error) {
         console.log(error)
      }
@@ -51,6 +75,9 @@ export const useRoleStore = defineStore('roleStore', () => {
             const res = await axios.put(`/api/roles/${roleId}`, {
                 permissions: JSON.stringify(permissions.value)
             })
+            if(res.status === 200) {
+                toast.success("permissions are assigned successfully", {timeout: 2000});
+            }
         } catch (error) {
             console.log(error)
         }
@@ -62,6 +89,7 @@ export const useRoleStore = defineStore('roleStore', () => {
         role,
         permissions,
         // actions
+        defaultPermissions,
         fetchRoles,
         fetchRole,
         assignPermissions

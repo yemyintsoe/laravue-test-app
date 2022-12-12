@@ -16,6 +16,13 @@ class AdminController extends Controller
         if(auth()->check() && request()->path() == 'admin/login') {
             return redirect('admin/tags');
         }
-        return view('welcome');
+        return $this->checkPermission(auth()->user());
+        // return view('welcome');
+    }
+
+    protected function checkPermission($user)
+    {
+        $permissions = json_decode($user->role->permissions);
+        return $permissions;
     }
 }
