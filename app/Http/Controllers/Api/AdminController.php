@@ -13,16 +13,29 @@ class AdminController extends Controller
         if(!auth()->check() && request()->path() != 'admin/login') {
             return redirect('admin/login');
         }
-        if(auth()->check() && request()->path() == 'admin/login') {
-            return redirect('admin/tags');
+        if(!auth()->check() && request()->path() == 'admin/login') {
+            return view('welcome');
         }
-        return $this->checkPermission(auth()->user());
-        // return view('welcome');
+        if(auth()->check() && request()->path() == 'admin/login') {
+            return redirect('admin/dashboard');
+        }
+        return $this->checkPermission();
     }
 
-    protected function checkPermission($user)
+    protected function checkPermission()
     {
-        $permissions = json_decode($user->role->permissions);
-        return $permissions;
+        $hasPermission = false;
+        if(auth()->check() && auth()->user()->role->permissions != null) {
+            $permissions = json_decode(auth()->user()->role->permissions);           
+            foreach($permissions as $permission) {
+                if('admin/'.$permission->name == request()->path()) {
+                    if($permission->read) {
+                        $hasPermission = true;
+                    }
+                }
+            }
+        }
+        if($hasPermission) return view('welcome');
+        return view('404');
     }
 }

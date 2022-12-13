@@ -86,6 +86,8 @@ class UserController extends Controller
         if(!auth()->check()) {
             return response()->json(['authUser' => null]); 
         }
-        return response()->json(['authUser' => auth()->user()]);
+        $authUserId = auth()->user()->id;
+        $authUser = User::with('role')->findOrFail($authUserId);
+        return response()->json(['authUser' => $authUser]);
     }
 }

@@ -12,6 +12,7 @@ pinia.use(({store}) => {
 const toast = useToast();
 
 export const useUserStore = defineStore('userStore', () => {
+    const menus = ref([])
     const isLoggedIn = ref(true)
     const authUser = ref('')
     const loading = ref(true)
@@ -150,10 +151,12 @@ export const useUserStore = defineStore('userStore', () => {
     const fetchAuthUser = async () => {
         const res = await axios.get("/api/users/auth/user")
         authUser.value = res.data.authUser
+        menus.value = JSON.parse(res.data.authUser.role.permissions)
     }
 
     return {
         // states
+        menus,
         isLoggedIn,
         authUser,
         loading,

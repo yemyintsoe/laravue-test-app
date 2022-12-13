@@ -73,28 +73,15 @@
 
         <ul class="menu-inner py-1">
           <!-- Dashboard -->
-          <li class="menu-item active">
-            <router-link :to="{name: 'dashboard'}" class="menu-link">
+          <li class="menu-item" v-for="(menu, i) in menus" :key="i" v-if="menus.length">
+            <router-link :to="'/admin/'+menu.name" class="menu-link" v-if="menu.read">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
-              <div data-i18n="Analytics">Dashboard</div>
-            </router-link>
-          </li>
-
-          <li class="menu-item">
-            <router-link :to="{name: 'tagIndex'}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-file"></i>
-              <div>Tag</div>
-            </router-link>
-          </li>
-          <li class="menu-item">
-            <router-link :to="{name: 'categoryIndex'}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-file"></i>
-              <div>Category</div>
+              <div data-i18n="Analytics">{{menu.menu}}</div>
             </router-link>
           </li>
 
           <!-- Layouts -->
-          <li class="menu-item">
+          <!-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-layout"></i>
               <div data-i18n="Layouts">User Management</div>
@@ -113,7 +100,7 @@
                 </router-link>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>
@@ -282,9 +269,9 @@ import { onMounted } from "vue";
 
 import { useUserStore } from "./stores/UserStore";
 import { storeToRefs } from "pinia";
-    // functions registration
+    // functions registration dfsdfsdf
     const userStore = useUserStore()
-    const { isLoggedIn, authUser } = storeToRefs(userStore)
+    const { menus, isLoggedIn, authUser } = storeToRefs(userStore)
 
     onMounted(() => {
       userStore.fetchAuthUser()

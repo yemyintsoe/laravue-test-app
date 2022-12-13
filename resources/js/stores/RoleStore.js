@@ -15,6 +15,14 @@ export const useRoleStore = defineStore('roleStore', () => {
     const defaultPermissions = () => {
         return [
             {
+                menu: 'Dashboard',
+                read: false,
+                write: false,
+                update: false,
+                delete: false,
+                name: 'dashboard'
+            },
+            {
                 menu: 'Tag',
                 read: false,
                 write: false,
