@@ -151,7 +151,7 @@ import { storeToRefs } from "pinia";
 import Aside from './admin/layout/Aside.vue'
     // functions registration dfsdfsdf
     const userStore = useUserStore()
-    const { menus, isLoggedIn, authUser } = storeToRefs(userStore)
+    const { menus, isLoggedIn, authUser, writePermission } = storeToRefs(userStore)
 
     onMounted(() => {
       userStore.fetchAuthUser()

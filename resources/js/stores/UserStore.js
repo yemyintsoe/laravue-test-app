@@ -1,5 +1,5 @@
 import { createPinia, defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { markRaw } from "vue";
 import router from "../router";
@@ -12,6 +12,7 @@ pinia.use(({store}) => {
 const toast = useToast();
 
 export const useUserStore = defineStore('userStore', () => {
+    // states 
     const menus = ref([])
     const isLoggedIn = ref(true)
     const authUser = ref('')
@@ -26,8 +27,18 @@ export const useUserStore = defineStore('userStore', () => {
         role_id: "",
     });
 
-    // const userEditId = ref('')
-    
+    // getters
+    const writePermission = computed(() => {
+        return isPermitted('write')
+    })
+
+    // actions 
+    const isPermitted = (action) => {
+        let permissions = JSON.parse(authUser.value.role.permissions)
+        for (let p of permissions) {
+            console.log(p['write'])
+        }
+    }
     const fetchUsers = async () => {
         try {
             const res = await axios.get('/api/users');
@@ -152,6 +163,7 @@ export const useUserStore = defineStore('userStore', () => {
         const res = await axios.get("/api/users/auth/user")
         authUser.value = res.data.authUser
         menus.value = JSON.parse(res.data.authUser.role.permissions)
+        console.log(writePermission.value)
     }
 
     return {
@@ -163,6 +175,7 @@ export const useUserStore = defineStore('userStore', () => {
         users,
         roles,
         formInputs,
+        writePermission,
         // userEditId,
         // actions
         fetchUsers,
