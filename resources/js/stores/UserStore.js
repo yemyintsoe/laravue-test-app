@@ -5,13 +5,15 @@ import { markRaw } from "vue";
 import router from "../router";
 import axios from "axios";
 
+const toast = useToast()
 const pinia = createPinia()
+
 pinia.use(({store}) => {
     store.router = markRaw(router)
 })
-const toast = useToast();
 
 export const useUserStore = defineStore('userStore', () => {
+
     // states 
     const menus = ref([])
     const isLoggedIn = ref(true)
@@ -28,16 +30,34 @@ export const useUserStore = defineStore('userStore', () => {
     });
 
     // getters
+    const readPermission = computed(() => {
+        return isPermitted('read')
+    })
     const writePermission = computed(() => {
         return isPermitted('write')
+    })
+    const updatePermission = computed(() => {
+        return isPermitted('update')
+    })
+    const deletePermission = computed(() => {
+        return isPermitted('delete')
     })
 
     // actions 
     const isPermitted = (action) => {
+        let status = false
         let permissions = JSON.parse(authUser.value.role.permissions)
         for (let p of permissions) {
-            console.log(p['write'])
+            if(router.currentRoute.value.path == '/admin/' + p.name) {                
+                if(p[action]) {
+                    status = true
+                    break
+                }else {
+                    break
+                }
+            }
         }
+        return status
     }
     const fetchUsers = async () => {
         try {
@@ -80,41 +100,6 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
-    // const fetchUser = async (id) => {
-    //     if(id) {
-    //         const res = await axios.get(`/api/users/${parseInt(id)}`)
-    //         formInputs.name = res.data.name
-    //         formInputs.email = res.data.email
-    //         formInputs.role_id = res.data.role_id
-    //         userEditId.value = res.data.id
-    //     }
-    // }
-
-    // const updateUser = async () => {
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append('name', formInputs.name)
-    //         formData.append('email', formInputs.email)
-    //         formData.append('role_id', formInputs.role_id)
-    //         formData.append('_method', 'patch')
-    //         await axios.post('/api/users/'+ userEditId.value, formData )
-    //         router.push({name: 'userIndex'})
-    //         toast.success("a user is updated successfully", {timeout: 2000});
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // const deleteUser = async (id) => {
-    //     try {
-    //         await axios.delete(`/api/users/${id}`);
-    //         getTags()
-    //         toast.success('a user is deleted successfully', {timeout: 2000})
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // }
-
     const deleteUser = async (id) => {
         try {
             await axios.delete(`/api/users/${id}`)
@@ -131,9 +116,6 @@ export const useUserStore = defineStore('userStore', () => {
         formInputs.password = ''
         formInputs.role_id = ''
     }
-    // const formSubmitAction = () => {
-    //     userEditId.value == '' ? storeUser() : updateUser()
-    // }
 
     const singIn = async () => {
         if(formInputs.email.trim() == '') toast.error("the email field is required", {timeout: 2000});
@@ -163,7 +145,6 @@ export const useUserStore = defineStore('userStore', () => {
         const res = await axios.get("/api/users/auth/user")
         authUser.value = res.data.authUser
         menus.value = JSON.parse(res.data.authUser.role.permissions)
-        console.log(writePermission.value)
     }
 
     return {
@@ -175,17 +156,16 @@ export const useUserStore = defineStore('userStore', () => {
         users,
         roles,
         formInputs,
+        readPermission,
         writePermission,
-        // userEditId,
+        updatePermission,
+        deletePermission,
         // actions
         fetchUsers,
         fetchRoles,
         storeUser,
-        // fetchUser,
-        // updateUser,
         deleteUser,
         resetForm,
-        // formSubmitAction,
         singIn,
         fetchAuthUser
     }

@@ -1,9 +1,16 @@
 import axios from "axios";
-import { defineStore } from "pinia";
+import { createPinia, defineStore } from "pinia";
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
+import router from "../router";
 
 const toast = useToast();
+const pinia = createPinia()
+
+pinia.use(({store}) => {
+    store.router = markRaw(router)
+})
+
 
 export const useRoleStore = defineStore('roleStore', () => {
     // states 
@@ -60,6 +67,7 @@ export const useRoleStore = defineStore('roleStore', () => {
      try {
         const res = await axios.get('/api/roles')
         roles.value = res.data.roles
+        // console.log(router.currentRoute.value.path)
      } catch (error) {
         console.log(error)
      }

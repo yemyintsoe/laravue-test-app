@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">Users</h5>
-                <router-link :to="{name: 'userCreate'}" class="btn btn-primary bg-primary text-white">
+                <router-link :to="{name: 'userCreate'}" v-if="writePermission" class="btn btn-primary bg-primary text-white">
                     Add New
                 </router-link>
             </div>
@@ -66,10 +66,11 @@ import { useUserStore } from "../../stores/UserStore";
 import { storeToRefs } from "pinia";
 
     const userStore = useUserStore()
-    const { loading, users } = storeToRefs(userStore)
+    const { loading, users, writePermission } = storeToRefs(userStore)
 
     onMounted( () => {
         userStore.fetchUsers()
+        console.log(writePermission.value)
     })
     // onUnmounted(() => {
     //     loading.value = false

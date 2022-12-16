@@ -67,7 +67,7 @@
                         </div>
                         <div class="flex-grow-1">
                           <span class="fw-semibold d-block">{{ authUser.name }}</span>
-                          <small class="text-muted">Admin</small>
+                          <small class="text-muted" v-if="authUser">{{ authUser.role.role }}</small>
                         </div>
                       </div>
                     </a>

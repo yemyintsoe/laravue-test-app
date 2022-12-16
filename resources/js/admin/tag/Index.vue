@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">Tags</h5>
-                <router-link to="/admin/tags/create" class="btn btn-primary bg-primary text-white">
+                <router-link to="/admin/tags/create" v-if="writePermission" class="btn btn-primary bg-primary text-white">
                     Add New
                 </router-link>
             </div>
@@ -52,9 +52,13 @@
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useTagStore } from "../../stores/TagStore";
+import { useUserStore } from "../../stores/UserStore";
 
     const tagStore = useTagStore()
     const { tags } = storeToRefs(tagStore)
+
+    const userStore = useUserStore()
+    const { writePermission } = storeToRefs(userStore)
 
     onMounted( () => {
         tagStore.fetchTags()
