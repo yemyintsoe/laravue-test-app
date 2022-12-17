@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Traits\ImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+
+    use ImageTrait;
 
     public function index()
     {
@@ -22,8 +25,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name',
             'image' => 'required|image|mimes:jpg,png,jpeg',
         ]);
-        $imageName =  uniqid().'_'.$request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('public/images', $imageName);
+        $imageName = $this->uploadImage('image', 'category-images');
         $category =  Category::create([
             'name' => $request->name,
             'image' => $imageName
@@ -44,13 +46,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name,'.$id
         ]);
         if($request->image) {
-            $request->validate([
-                'image' => 'image|mimes:jpg,png,jpeg'
-            ]);
-            Storage::delete('public/images/'.$category->image);
-            $imageName = uniqid().'_'.$request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('public/images', $imageName);
-            $data['image'] = $imageName;
+            $data['image'] = $this->updateImage('image', 'category-images', $category->image);
         }
         $category->update($data);
         return response()->json(['msg' => 'a category updated successfully']);
@@ -58,9 +54,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        Storage::delete('public/images/'.$category->image);
-        $category->delete();
+        $this->deleteImage(Category::class, $id, 'category-images');
         return response()->json(["msg" => "deleted success"]);
     }
 }

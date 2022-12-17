@@ -9,6 +9,9 @@ const TagCreateEdit = () => import('../admin/tag/CreateEdit.vue')
 // category
 const CategoryIndex = () => import('../admin/category/Index.vue')
 const CategoryCreateEdit = () => import('../admin/category/CreateEdit.vue')
+// category
+const BlogIndex = () => import('../admin/blog/Index.vue')
+const BlogCreateEdit = () => import('../admin/blog/CreateEdit.vue')
 // user
 const UserIndex = () => import('../admin/user/Index.vue')
 const UserCreateEdit = () => import('../admin/user/CreateEdit.vue')
@@ -65,6 +68,17 @@ const routes = [
       name: 'categoryEdit',
       component: CategoryCreateEdit,
       props: true,
+    },
+    // blog
+    {
+      path: '/admin/blogs',
+      name: 'blogIndex',
+      component: BlogIndex
+    },
+    {
+      path: '/admin/blogs/create',
+      name: 'blogCreate',
+      component: BlogCreateEdit
     },
     // user
     {

@@ -34,19 +34,27 @@ class RoleSeeder extends Seeder
                 ],
                 [
                     "menu" => 'Tag',
-                    "read" => false,
-                    "write" => false,
-                    "update" => false,
-                    "delete" => false,
+                    "read" => true,
+                    "write" => true,
+                    "update" => true,
+                    "delete" => true,
                     "name" => 'tags'
                 ],
                 [
                     "menu" => 'Category',
-                    "read" => false,
-                    "write" => false,
-                    "update" => false,
-                    "delete" => false,
+                    "read" => true,
+                    "write" => true,
+                    "update" => true,
+                    "delete" => true,
                     "name" => 'categories'
+                ],
+                [
+                    "menu" => 'Blog',
+                    "read" => true,
+                    "write" => true,
+                    "update" => true,
+                    "delete" => true,
+                    "name" => 'blogs'
                 ],
                 [
                     "menu" => 'User',

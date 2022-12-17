@@ -32,7 +32,7 @@
                     <td>{{ category.id }}</td>
                     <td>{{ category.name }}</td>
                     <td>
-                        <img :src="`/storage/images/${category.image}`" alt="" style="width: 100px; height: 100px; object-fit: cover" class="rounded">
+                        <img :src="`/storage/category-images/${category.image}`" alt="" style="width: 100px; height: 100px; object-fit: cover" class="rounded">
                     </td>
                     <td>
                         <div class="dropdown" v-if="updatePermission == true || deletePermission == true">

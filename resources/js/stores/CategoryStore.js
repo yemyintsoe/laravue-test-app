@@ -68,7 +68,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
             const res = await axios.get(`/api/categories/${parseInt(id)}`)
             formInputs.name = res.data.name
             isImagePreviewAble.value = true
-            imagePreview.value = `/storage/images/${res.data.image}`
+            imagePreview.value = `/storage/category-images/${res.data.image}`
             categoryEditId.value = res.data.id
        }
     }
@@ -89,7 +89,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     }
 
     // destroy
-    const deleteCategory = async (id) => {
+    const destroyCategory = async (id) => {
         try {
             if(confirm('are you sure to delete?')) {
                 await axios.delete(`/api/categories/${id}`);
@@ -125,7 +125,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
         storeCategory,
         fetchCategory,
         updateCategory,
-        deleteCategory,
+        destroyCategory,
         resetForm,
         formSubmitAction,
     }

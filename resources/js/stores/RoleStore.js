@@ -46,6 +46,14 @@ export const useRoleStore = defineStore('roleStore', () => {
                 name: 'categories'
             },
             {
+                menu: 'Blog',
+                read: false,
+                write: false,
+                update: false,
+                delete: false,
+                name: 'blogs'
+            },
+            {
                 menu: 'User',
                 read: false,
                 write: false,

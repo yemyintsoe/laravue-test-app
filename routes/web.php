@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AdminController, CategoryController, RoleController, TagController, UserController};
+use App\Http\Controllers\Admin\{AdminController, BlogController, CategoryController, RoleController, TagController, UserController};
 
 Route::prefix('api')->middleware('isAdmin')->group(function() {
     # tag
     Route::apiResource('/tags', TagController::class);
     # category
     Route::apiResource('/categories', CategoryController::class);
+    # category
+    Route::apiResource('/blogs', BlogController::class);
     # role
     Route::apiResource('/roles', RoleController::class);
     # user
