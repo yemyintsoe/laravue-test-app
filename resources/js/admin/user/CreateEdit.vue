@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form @submit.prevent="userStore.storeUser">
+                <form @submit.prevent="appStore.storeUser">
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
                     <div class="input-group">
@@ -59,7 +59,7 @@
 // functions import
 import { onMounted } from "vue";
 
-import { useUserStore } from "../../stores/UserStore";
+import { useAppStore } from "../../stores/AppStore";
 import { storeToRefs } from "pinia";
     
     const props = defineProps({
@@ -69,17 +69,17 @@ import { storeToRefs } from "pinia";
         }
     })
     // functions registration
-    const userStore = useUserStore()
-    const { roles, formInputs } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { roles, formInputs } = storeToRefs(appStore)
     
     onMounted( () => {
-        userStore.fetchRoles()
+        appStore.fetchRoles()
         // if(props.id) {
-        //     userStore.editUser(props.id)
+        //     appStore.editUser(props.id)
         // } else {
-        //     userStore.resetForm()
+        //     appStore.resetForm()
         // }
-        userStore.resetForm()
+        appStore.resetForm()
     })
 </script>
 

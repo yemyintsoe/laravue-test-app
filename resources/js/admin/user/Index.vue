@@ -43,8 +43,7 @@
                             <router-link to="" class="dropdown-item">
                                 <i class="bx bx-edit-alt me-1"></i> Edit
                             </router-link>
-                            <!-- <button @click="userStore.deleteUser(user.id)" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button> -->
-                            <a class="dropdown-item" href="javascript:void(0);" @click="userStore.deleteUser(user.id)"><i class="bx bx-trash me-1"></i> Delete</a>
+                            <a class="dropdown-item" href="javascript:void(0);" @click="appStore.deleteUser(user.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                         </div>
                         </div>
                     </td>
@@ -62,14 +61,14 @@
 
 <script setup>
 import { onMounted, onUnmounted } from "vue";
-import { useUserStore } from "../../stores/UserStore";
+import { useAppStore } from "../../stores/AppStore";
 import { storeToRefs } from "pinia";
 
-    const userStore = useUserStore()
-    const { loading, users, writePermission } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { loading, users, writePermission } = storeToRefs(appStore)
 
     onMounted( () => {
-        userStore.fetchUsers()
+        appStore.fetchUsers()
         console.log(writePermission.value)
     })
     // onUnmounted(() => {

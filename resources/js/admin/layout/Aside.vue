@@ -78,11 +78,11 @@
 </template>
 
 <script setup>
-import { useUserStore } from "../../stores/UserStore";
+import { useAppStore } from "../../stores/AppStore";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-    const userStore = useUserStore()
-    const { menus } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { menus } = storeToRefs(appStore)
 
     onMounted(() => {
         

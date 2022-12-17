@@ -52,13 +52,13 @@
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useTagStore } from "../../stores/TagStore";
-import { useUserStore } from "../../stores/UserStore";
+import { useAppStore } from "../../stores/AppStore";
 
     const tagStore = useTagStore()
     const { tags } = storeToRefs(tagStore)
 
-    const userStore = useUserStore()
-    const { writePermission } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { writePermission } = storeToRefs(appStore)
 
     onMounted( () => {
         tagStore.fetchTags()

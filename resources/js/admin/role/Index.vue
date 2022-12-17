@@ -48,13 +48,13 @@
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useRoleStore } from "../../stores/RoleStore";
-import { useUserStore } from "../../stores/UserStore";
+import { useAppStore } from "../../stores/AppStore";
 
     const roleStore = useRoleStore()
     const { roles } = storeToRefs(roleStore)
 
-    const userStore = useUserStore()
-    const { writePermission } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { writePermission } = storeToRefs(appStore)
 
     onMounted( () => {
         roleStore.fetchRoles()

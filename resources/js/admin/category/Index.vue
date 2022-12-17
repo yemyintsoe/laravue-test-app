@@ -63,15 +63,15 @@
 import { onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import { useCategoryStore } from "../../stores/CategoryStore";
-import { useUserStore } from "../../stores/UserStore";
+import { useAppStore } from "../../stores/AppStore";
 import { storeToRefs } from "pinia";
 
     const toast = useToast()
     const categoryStore = useCategoryStore()
     const { loading, categories } = storeToRefs(categoryStore)
 
-    const userStore = useUserStore()
-    const { writePermission, updatePermission, deletePermission } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { writePermission, updatePermission, deletePermission } = storeToRefs(appStore)
 
     onMounted( () => {
         categoryStore.fetchCategories()

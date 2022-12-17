@@ -12,7 +12,7 @@ pinia.use(({store}) => {
     store.router = markRaw(router)
 })
 
-export const useUserStore = defineStore('userStore', () => {
+export const useAppStore = defineStore('appStore', () => {
 
     // states 
     const menus = ref([])

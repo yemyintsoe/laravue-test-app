@@ -146,14 +146,14 @@
 <script setup>
 import { onMounted } from "vue";
 
-import { useUserStore } from "./stores/UserStore";
+import { useAppStore } from "./stores/AppStore";
 import { storeToRefs } from "pinia";
 import Aside from './admin/layout/Aside.vue'
     // functions registration dfsdfsdf
-    const userStore = useUserStore()
-    const { menus, isLoggedIn, authUser, writePermission } = storeToRefs(userStore)
+    const appStore = useAppStore()
+    const { menus, isLoggedIn, authUser, writePermission } = storeToRefs(appStore)
 
     onMounted(() => {
-      userStore.fetchAuthUser()
+      appStore.fetchAuthUser()
     })
   </script>

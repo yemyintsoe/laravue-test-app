@@ -11,7 +11,7 @@
                 <span class="app-brand-text demo text-body fw-bolder">Laravue Login</span>
                 </div>
                 <!-- /Logo -->
-                <form @submit.prevent="userStore.singIn" class="mb-3">
+                <form @submit.prevent="appStore.singIn" class="mb-3">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
@@ -54,9 +54,9 @@
 </template>
 <script setup>
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '../../stores/UserStore';
+import { useAppStore } from '../../stores/AppStore';
 
-const userStore = useUserStore()
+const appStore = useAppStore()
 
-const { formInputs } = storeToRefs(userStore)
+const { formInputs } = storeToRefs(appStore)
 </script>

@@ -10,15 +10,15 @@ import('../admin-assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.c
 import('../admin-assets/assets/vendor/js/helpers.js')
 import('../admin-assets/assets/js/config.js')
 
-// toast
-import  Toast  from 'vue-toastification';
-import "vue-toastification/dist/index.css";
-// pinia
-import { createPinia } from 'pinia';
 // vue
 import { createApp } from 'vue';
 import App from './App.vue'
 import router from './router/index'
+// pinia
+import { createPinia } from 'pinia';
+// toast
+import  Toast  from 'vue-toastification';
+import "vue-toastification/dist/index.css";
 
 createApp(App)
 .use(router)
