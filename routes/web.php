@@ -1,7 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\{AdminController, BlogController, CategoryController, RoleController, TagController, UserController};
+use App\Http\Controllers\Admin\{
+    AdminController,
+    BlogController,
+    CategoryController,
+    RoleController,
+    TagController,
+    UserController
+};
 
 Route::prefix('api')->middleware('isAdmin')->group(function() {
     # tag
@@ -20,5 +27,5 @@ Route::prefix('api')->middleware('isAdmin')->group(function() {
 });
 
 Route::get('/', [AdminController::class, 'index']);
-Route::get('/{any}', [AdminController::class, 'index'])->where("any",".*");
+Route::get('/{any}', [AdminController::class, 'index'])->where("any",'.*');
 

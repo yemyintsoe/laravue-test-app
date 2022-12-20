@@ -79,9 +79,9 @@ export const useAppStore = defineStore('appStore', () => {
     }
 
     const storeUser = async () => {
-        if(formInputs.name.trim() == '') toast.error("the name field is required", {timeout: 2000});
-        if(formInputs.email.trim() == '') toast.error("the email field is required", {timeout: 2000});
-        if(formInputs.password.trim() == '') toast.error("the password field is required", {timeout: 2000});
+        if(formInputs.name.trim() == '') return toast.error("the name field is required", {timeout: 2000});
+        if(formInputs.email.trim() == '') return toast.error("the email field is required", {timeout: 2000});
+        if(formInputs.password.trim() == '') return toast.error("the password field is required", {timeout: 2000});
         if(formInputs.role_id == '') return toast.error("the role field is required", {timeout: 2000});
         try {
             const formData = new FormData();
@@ -118,7 +118,7 @@ export const useAppStore = defineStore('appStore', () => {
     }
 
     const singIn = async () => {
-        if(formInputs.email.trim() == '') toast.error("the email field is required", {timeout: 2000});
+        if(formInputs.email.trim() == '') return toast.error("the email field is required", {timeout: 2000});
         if(formInputs.password.trim() == '') return toast.error("the password field is required", {timeout: 2000});
         try {
             const formData = new FormData();
@@ -126,12 +126,12 @@ export const useAppStore = defineStore('appStore', () => {
             formData.append('password', formInputs.password)
             const res = await axios.post('/api/users/sign-in', formData )
             if(res.data.status === 'fail') {
-                toast.error("signed in fail", {timeout: 2000})
+                toast.success("signed in fail", {timeout: 2000})
                 return
             }
-            toast.success("signed in successfully", {timeout: 2000})
             authUser.value = res.data.user
             isLoggedIn.value = true
+            toast.success("signed in successfully", {timeout: 2000})
             router.push({ name: 'dashboard' })
         } catch (error) {
             if(error.response.status === 422) {
